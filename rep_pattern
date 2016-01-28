@@ -1,4 +1,4 @@
-rep_pattern<-function (filename, pattern, repl = NA, col = NULL) {
+rep_pattern<-function (filename, pattern = "^$", repl = NA, col = NULL) {
 
 #####################################################################################
 ## INFORMATION ABOUT THE FUNCTION 'rep_pattern'
@@ -7,6 +7,7 @@ rep_pattern<-function (filename, pattern, repl = NA, col = NULL) {
 ##  
 ## filename= Input file
 ## pattern = Pattern you want replacing - ".*%.*" the use of .* removes anything before or after, both at the same time = replace whole cell. 
+             DEFAULT = Blank Cells
 ## repl = Replace pattern with. DEFAULT = NULL 
 ## col = The number columns not the name that require converting. DEFAULT = all columns in data frame
 ##  
@@ -17,16 +18,22 @@ rep_pattern<-function (filename, pattern, repl = NA, col = NULL) {
 ###############################################################################################################################
   
   x<- filename
+  
   if (missing(col)) {col = 1:ncol(x) 
           print("No columns defined referred to default = all columns in data frame")}
   y<- as.vector(col)
+  
+  if (missing(pattern)) {print("No pattern defined referred to default pattern = blank cells")}
+   ifelse (pattern == "", (pattern <- "^$"), NA)
+  
   if (missing(repl)) {print("No replacement identified replacement referred to default = NA")}
+  
   ifelse (pattern == "NA", print ("ERROR: To replace NA values, enter NA without quotations"), NA) 
   
   if (is.na(pattern)) { 
       
       x[is.na(x[,y])]<- repl
-      print("Replacing NA will only work on numeric, logical and integer classes. If you want to change NA values in a character class consider using na.strings when reading in your table.")
+      print("Replacing NA will only work on numeric, logical and integer classes. If you want to change NA values in a character class consider using na.strings when reading in your table or leaving pattern blank for character classes.")
   }
   
   else if (!is.na(pattern)) {

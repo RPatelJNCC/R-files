@@ -7,7 +7,7 @@ rep_pattern<-function (filename, pattern = "^$", repl = NA, col = NULL) {
 ##  
 ## filename= Input file
 ## pattern = Pattern you want replacing - ".*%.*" the use of .* removes anything before or after, both at the same time = replace whole cell. 
-             DEFAULT = Blank Cells
+##           DEFAULT = Blank Cells
 ## repl = Replace pattern with. DEFAULT = NULL 
 ## col = The number columns not the name that require converting. DEFAULT = all columns in data frame
 ##  

@@ -40,4 +40,4 @@ rep_pattern<-function (filename, pattern, repl = NA, col = NULL) {
   pattern_rep <<-read.csv("replaced.csv", sep = ",", header = TRUE, stringsAsFactors = F)
   
  
-}Enter file contents here
+}

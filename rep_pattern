@@ -1,0 +1,43 @@
+rep_pattern<-function (filename, pattern, repl = NA, col = NULL) {
+
+#####################################################################################
+## INFORMATION ABOUT THE FUNCTION 'rep_pattern'
+##  
+## removes characters from a file already read into R and exports as a data frame
+##  
+## filename= Input file
+## pattern = Pattern you want replacing - ".*%.*" the use of .* removes anything before or after, both at the same time = replace whole cell. 
+## repl = Replace pattern with. DEFAULT = NULL 
+## col = The number columns not the name that require converting. DEFAULT = all columns in data frame
+##  
+## If pattern or replace are characters they must be inside quotations g. "A"
+## For all other regular expression please see ?regex or http://www.cheatography.com/davechild/cheat-sheets/regular-expressions/pdf_bw/
+## NB - file will return with header = TRUE
+##################################################################################
+###############################################################################################################################
+  
+  x<- filename
+  if (missing(col)) {col = 1:ncol(x) 
+          print("No columns defined referred to default = all columns in data frame")}
+  y<- as.vector(col)
+  if (missing(repl)) {print("No replacement identified replacement referred to default = NA")}
+  ifelse (pattern == "NA", print ("ERROR: To replace NA values, enter NA without quotations"), NA) 
+  
+  if (is.na(pattern)) { 
+      
+      x[is.na(x[,y])]<- repl
+      print("Replacing NA will only work on numeric, logical and integer classes. If you want to change NA values in a character class consider using na.strings when reading in your table.")
+  }
+  
+  else if (!is.na(pattern)) {
+  
+  x[,y]<-data.frame(sapply(x[,y], function(x) gsub(pattern, repl, x)))
+  
+  }
+  
+  DF<- data.frame(x)
+  write.csv(DF, "replaced.csv", row.names = FALSE)
+  pattern_rep <<-read.csv("replaced.csv", sep = ",", header = TRUE, stringsAsFactors = F)
+  
+ 
+}Enter file contents here
